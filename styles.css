@@ -69,4 +69,12 @@ button:active {
   }
 }
 
+.winner, .over {
+  height: 50%;
+}
 
+button:disabled {
+  background-color: cornsilk;
+  box-shadow: none;
+  cursor: no-drop;
+}

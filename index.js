@@ -12,7 +12,8 @@ let messageEl = document.getElementById("message-el")
 let sumEl = document.getElementById("sum-el")
 let cardsEl = document.getElementById("cards-el")
 let playerEl = document.getElementById("player-el")
-
+let winnerGif
+let gameOver
 
 
 let deck = {
@@ -67,7 +68,8 @@ function getRandomCard() {
 
 
 function startGame() {
-
+  clearInterval(winnerGif)
+  clearInterval(gameOver)
   cards = []
   let firstCard = getRandomCard()
   let secondCard = getRandomCard()
@@ -85,8 +87,7 @@ function startGame() {
 
 
 
-function renderGame() {
- 
+function renderGame() {  
   cardsEl.innerHTML = ""
   for (let card of cards) {    
     cardsEl.innerHTML += ` <img class="card_img" src= "${card.deckUrl}"/>`
@@ -96,20 +97,28 @@ function renderGame() {
   if (sum <= 20) {
     message = "Do you want to draw a new card?"
   } else if (sum === 21) {
-    setInterval(function () {
-      cardsEl.innerHTML = `<h2>You've got Blackjack!</h2>`
-    }, 2000)
-   
+    winnerGif = setInterval(function () {
+      cardsEl.innerHTML = `<img class="winner" src="/images/winner.gif"/>`
+    }, 1000)
     message = "You've got Blackjack!"
     hasBlackJack = true
   } else {
     message = "You're out of the game!"
     isAlive = false
+    gameOver =  setInterval(function () {
+      cardsEl.innerHTML = `<img class="over" src="/images/over.gif"/>`
+    }, 1000)
   }
   messageEl.textContent = message
-  let cardsImg = document.querySelector("#cards-el").children
 
+  if(isAlive && !hasBlackJack) {
+    document.getElementById("start_btn").disabled = true
+  }else{
+    document.getElementById("start_btn").disabled = false
+  }
+  
   /*Style */
+  let cardsImg = document.querySelector("#cards-el").children
   let topMargin = 10
   let leftMargin = -110
   for(let i=0; i<cardsImg.length; i++) {
@@ -133,7 +142,3 @@ function newCard() {
       }
   }
 }
-
-/*Style*/
-
-
