@@ -58,8 +58,7 @@ function getRandomCard() {
   let randomUrl
   for(let item of deckVal) {
     randomUrl = Math.floor(Math.random() * item.url.length)
-    
-   }
+  }
    return {
     "deckValue": deckVal[randomNumber].val, 
     "deckUrl":deckVal[randomNumber].url[randomUrl]
@@ -91,18 +90,21 @@ function renderGame() {
   cardsEl.innerHTML = ""
   for (let card of cards) {    
     cardsEl.innerHTML += ` <img class="card_img" src= "${card.deckUrl}"/>`
-  
   }
   
   sumEl.textContent = "Sum: " + sum
   if (sum <= 20) {
-      message = "Do you want to draw a new card?"
+    message = "Do you want to draw a new card?"
   } else if (sum === 21) {
-      message = "You've got Blackjack!"
-      hasBlackJack = true
+    setInterval(function () {
+      cardsEl.innerHTML = `<h2>You've got Blackjack!</h2>`
+    }, 2000)
+   
+    message = "You've got Blackjack!"
+    hasBlackJack = true
   } else {
-      message = "You're out of the game!"
-      isAlive = false
+    message = "You're out of the game!"
+    isAlive = false
   }
   messageEl.textContent = message
   let cardsImg = document.querySelector("#cards-el").children
@@ -112,12 +114,11 @@ function renderGame() {
   let leftMargin = -110
   for(let i=0; i<cardsImg.length; i++) {
     topMargin += 20
-      cardsImg[i].style.marginTop += `${topMargin}px`
-        
+    cardsImg[i].style.marginTop += `${topMargin}px`
     }
     for(let i=1; i<cardsImg.length; i++) {
       cardsImg[i].style.marginLeft += `${leftMargin}px`     
-      }
+    }
 }
 
 
