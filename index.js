@@ -108,7 +108,7 @@ function renderGame() {
   let cardsImg = document.querySelector("#cards-el").children
 
   /*Style */
-  let topMargin = 20
+  let topMargin = 10
   let leftMargin = -110
   for(let i=0; i<cardsImg.length; i++) {
     topMargin += 20
