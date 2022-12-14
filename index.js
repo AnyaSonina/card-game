@@ -66,6 +66,19 @@ function getRandomCard() {
   }
 }
 
+function shallowEqual(object1, object2) {
+  const keys1 = Object.keys(object1)
+  const keys2 = Object.keys(object2)
+  if (keys1.length !== keys2.length) {
+    return false
+  }
+  for (let key of keys1) {
+    if (object1[key] !== object2[key]) {
+      return false
+    }
+  }
+  return true
+}
 
 function startGame() {
   clearInterval(winnerGif)
@@ -74,7 +87,9 @@ function startGame() {
   let firstCard = getRandomCard()
   let secondCard = getRandomCard()
   
-  if(JSON.stringify(firstCard) != JSON.stringify(secondCard)) {
+  let equal = shallowEqual(firstCard, secondCard)
+  
+  if(!equal) {
   isAlive = true
   hasBlackJack = false
   cards = [firstCard, secondCard]
@@ -134,7 +149,8 @@ function renderGame() {
 function newCard() {
   if (isAlive === true && hasBlackJack === false) {
       let card = getRandomCard()
-      let includes = cards.some(item => JSON.stringify(card) === JSON.stringify(item))
+      
+      let includes = cards.some(item => shallowEqual(card, item))
       if(!includes) {
         cards.push(card)
         sum += card.deckValue
